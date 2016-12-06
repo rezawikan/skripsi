@@ -9,7 +9,6 @@ use Emall\Auth\Filter;
 
 $page     = new Pagination;
 $home_url = '../../index.php';
-$sellerID = Session::get('sellerSession');
 
 if ($_POST) {
   if (isset($_POST['page'])) {
@@ -60,28 +59,24 @@ if ($_POST) {
       }
   }
 
-  if (isset($subcategories)) {
-      $total_records = $page->TotalRows($sellerID, $subcategories);
-  } else {
-      $total_records = $page->TotalRows($sellerID);
-  }
 
+  $total_records = $page->TotalRowsWithoutSID($subcategories);
   $total_pages        = ceil($total_records/$item_per_page);
   $page_position      = (($page_number-1) * $item_per_page);
 
 
   if (isset($priceSort, $subcategories,$search )) {
-      $results = $page->resultRangeBySubcategoriesAndPriceAndSearch($page_position, $item_per_page, $sellerID, $subcategories, $priceSort, $search);
+      $results = $page->resultRangeBySubcategoriesAndPriceAndSearchhWithoutSID($page_position, $item_per_page, $subcategories, $priceSort, $search);
   } elseif (isset($priceSort, $search)) {
-      $results = $page->resultRangeByDefaultPriceAndSearch($page_position, $item_per_page, $sellerID, $priceSort, $search);
+      $results = $page->resultRangeByDefaultPriceAndSearchWithoutSID($page_position, $item_per_page, $priceSort, $search);
   } elseif (isset($subcategories, $defaultSort, $search)) {
-      $results = $page->resultRangeBySubcategoriesAndSeach($page_position, $item_per_page, $sellerID, $subcategories, $defaultSort,$search);
+      $results = $page->resultRangeBySubcategoriesAndSearchWithoutSID($page_position, $item_per_page, $subcategories, $defaultSort,$search);
   } elseif (isset($subcategories, $search)) {
-      $results = $page->resultRangeBySubcategoriesAndSearch($page_position, $item_per_page, $sellerID, $subcategories, $search);
+      $results = $page->resultRangeBySubcategoriesAndSearchWithoutSID($page_position, $item_per_page, $subcategories, $search);
   } elseif (isset($defaultSort, $search)){
-      $results = $page->resultRangeByDefaultAndSearch($page_position, $item_per_page, $sellerID, $defaultSort, $search);
+      $results = $page->resultRangeByDefaultAndSearchWithoutSID($page_position, $item_per_page, $defaultSort, $search);
   } else {
-      $results = $page->resultRangeByDefaultAndSearch($page_position, $item_per_page, $sellerID, $defaultSort, $search);
+      $results = $page->resultRangeByDefaultAndSearchWithoutSID($page_position, $item_per_page, $defaultSort, $search);
   }
 
   echo json_encode($results);

@@ -15,12 +15,12 @@ class Profile
 	}
 
   // show all data profile
-  public function getDataProfile($sellerID)
+  public function getDataProfile($buyerID)
   {
     try {
         $user = $this->conn;
-        $user->setTable('seller');
-        $result = $user->select()->where('sellerID','=',$sellerID)->first();
+        $user->setTable('buyer');
+        $result = $user->select()->where('buyerID','=',$buyerID)->first();
 
         echo json_encode($result);
     } catch (PDOException $e) {
@@ -33,8 +33,8 @@ class Profile
   {
     try {
         $user = $this->conn;
-        $user->setTable('seller');
-        $result = $user->where('sellerID','=',$id)->update([
+        $user->setTable('buyer');
+        $result = $user->where('buyerID','=',$id)->update([
           'firstName' => $firstName,
           'lastName'  => $lastName,
           'email'     => $email,
@@ -58,8 +58,8 @@ class Profile
   {
     try {
         $user = $this->conn;
-        $user->setTable('seller');
-        $user->where('sellerID','=',$id)->update([
+        $user->setTable('buyer');
+        $user->where('buyerID','=',$id)->update([
           'image' => $filename
         ]);
 

@@ -34,7 +34,7 @@ class Pagination
   }
 
   //default
-  public function resultRangeByDefault($page_position, $item_per_page, $sellerID, $orderByProductID = 'ASC')
+  public function resultRangeByDefault($page_position, $item_per_page, $sellerID, $orderByProductID = 'DES')
   {
     $user = $this->conn;
     $user->setTable('product');

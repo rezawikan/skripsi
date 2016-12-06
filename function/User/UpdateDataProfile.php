@@ -10,7 +10,7 @@ use Emall\Auth\Redirect;
 $seller     = new Profile;
 $uploader   = new ImagesProfile;
 $home_url   = '../../index.php';
-$id         = Session::get('sellerSession');
+$id         = Session::get('buyerSession');
 
 if ($_POST) {
     if ($_FILES) {

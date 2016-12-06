@@ -127,13 +127,13 @@ $(document).ready(function() {
     }
 
     function loadData() {
-        var dataID = getCookie('id');
+        var dataID = getCookie('id-buyer');
 
         $.ajax({
             url: 'function/user/ViewDataProfile.php',
             type: 'POST',
             data: {
-                sellerID: dataID
+                buyerID: dataID
             },
             success: function(result) {
                 var resultObj = JSON.parse(result);

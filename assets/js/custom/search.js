@@ -60,21 +60,6 @@ $(document).ready(function(){
         }
     });
 
-    // get data cookie
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return null;
-    }
 
     // function get value from adrress
     function getParameterByName(name, url) {
@@ -109,7 +94,6 @@ $(document).ready(function(){
 
     // load data from table bank
     function loadData() {
-        var dataID = getCookie('id');
         // get id and code from address
         var page_number   = getParameterByName('page');
         var limit         = getParameterByName('limit');
@@ -145,7 +129,7 @@ $(document).ready(function(){
                     $.each(resultObj, function(key, val) { // looping data
                         number++;
                         var newRow = $("<div class='col-lg-3 col-md-3 col-xs-12'>");
-                        newRow.html("<div class='ibox'><div class='ibox-content product-box'><div class='product-imitation'><img class='img-responsive' src='uploads/product/1_1478870412.jpg'></div><div class='product-desc'><span class='product-price'>IDR "+number_format(val.productPrice)+"</span><small class='text-muted'>Category</small><a href='#' class='product-name'> "+val.productName+"</a><div class='small m-t-xs'>"+val.shortDescription+"</div><div class='m-t text-righ'><a href='product_details.php?productID="+val.productID+"' class='btn btn-primary details'>Details</a></div></div></div></div>");
+                        newRow.html("<div class='ibox'><div class='ibox-content product-box'><div class='product-imitation'><img class='img-responsive' src='seller/uploads/product/1_1478870412.jpg'></div><div class='product-desc'><span class='product-price'>IDR "+number_format(val.productPrice)+"</span><small class='text-muted'>Category</small><a href='#' class='product-name'> "+val.productName+"</a><div class='small m-t-xs'>"+val.shortDescription+"</div><div class='m-t text-righ'><a href='product_details.php?productID="+val.productID+"' class='btn btn-primary details'>Details</a></div></div></div></div>");
                         dataHandler.append(newRow);
                     })
                 }

@@ -5436,7 +5436,7 @@ table.shoping-cart-table tr td:last-child {
 .image-imitation {
   background-color: #f8f8f9;
   text-align: center;
-  padding: 200px 0;
+  /*padding: 200px 0;*/
 }
 .product-main-price small {
   font-size: 10px;
@@ -6672,14 +6672,50 @@ body.landing-page {
   font-family: 'Open Sans', helvetica, arial, sans-serif;
   background-color: #fff;
 }
-.landing-page {
+.landing-page {}
   /* CUSTOMIZE THE NAVBAR
   -------------------------------------------------- */
+
+/*
+MARGIN ADDITIONAL
+--------------------------------------------------
+*/
+  .landing-page .distance-top{
+    margin-top: 10px;
+  }
+  .landing-page .distance-right{
+    margin-right: 10px;
+  }
+  .landing-page .distance-left{
+    margin-left: 10px;
+  }
+  .landing-page .distance-bottom{
+    margin-bottom: 10px;
+  }
+  .landing-page .distance-bottom-more{
+    margin-bottom: 30px;
+  }
+  .landing-page .distance-bottom-image{
+    margin-bottom: 60px;
+  }
+  .landing-page .distance-top-image{
+    margin-top: 60px;
+  }
   /* Flip around the padding for proper display in narrow viewports */
   /* BACKGROUNDS SLIDER
   -------------------------------------------------- */
   /* CUSTOMIZE THE CAROUSEL
   -------------------------------------------------- */
+  .landing-page .carouselContainer {
+       overflow:hidden;
+  }
+   .landing-page .carouselContainer img {
+       height:350px;
+  }
+  .landing-page .flexs {
+    display: flex;
+    flex-wrap: wrap;
+  }
   /* Carousel base class */
   /* Since positioning the image, we need to help out the caption */
   /* Declare heights because of positioning of img element */
@@ -6687,37 +6723,13 @@ body.landing-page {
   ------------------------- */
   /* Buttons - only primary custom button
   ------------------------- */
+  .landing-page .padding-btn{
+    padding: 9px 15px;
+  }
   /* RESPONSIVE CSS
   -------------------------------------------------- */
-}
-.landing-page .padding-btn{
-  padding: 9px 15px;
-}
-.landing-page .flexs {
-  display: flex;
-  flex-wrap: wrap;
-}
-.landing-page .distance-top{
-  margin-top: 10px;
-}
-.landing-page .distance-right{
-  margin-right: 10px;
-}
-.landing-page .distance-left{
-  margin-left: 10px;
-}
-.landing-page .distance-bottom{
-  margin-bottom: 10px;
-}
-.landing-page .distance-bottom-more{
-  margin-bottom: 30px;
-}
-.landing-page .distance-bottom-image{
-  margin-bottom: 60px;
-}
-.landing-page .distance-top-image{
-  margin-top: 60px;
-}
+
+
 .landing-page span.navy {
   color: #1ab394;
 }

@@ -8,16 +8,16 @@ use Emall\Auth\Redirect;
 
 
 // initialize classes
-$seller     = Database::getInstance();
+$buyer     = Database::getInstance();
 $log        = new Authentication;
 
-$id = $_SESSION['sellerSession'];
+$id = $_SESSION['buyerSession'];
 
 if (!$log->is_logged_in()) {
     Redirect::to('index.php');
 }
 
 // get data users
-$seller->setTable('seller');
-$user = $seller->select()->where('sellerID','=',$id)->first();
+$buyer->setTable('buyer');
+$user = $buyer->select()->where('buyerID','=',$id)->first();
 $user->fullName = $user->firstName . ' ' .$user->lastName;

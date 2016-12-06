@@ -10,9 +10,16 @@ use Emall\Auth\Filter;
 // $page     = new Pagination;
 // $sellerID = Session::get('sellerSession');
 // $result = $page->resultRangeByDefaultAndSearch(0, 24, 88, null, 'df');
-$load = new Product;
-$result = $load->LoadSubCategories(39);
-echo json_encode($result);
+// $load = new Product;
+// $result = $load->LoadSubCategories(39);
+// echo json_encode($result);
+
+
+$array1 = array("a" => "green", "red", "blue", "red");
+$array2 = array("b" => "green", "yellow", "red");
+$result = array_diff($array1, $array2);
+
+var_dump($result);
 
 
 //

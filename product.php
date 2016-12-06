@@ -59,33 +59,11 @@
     </div>
 </section>
 <section id="features" class="container services wow fadeInRight ">
+  <div id="message">
+
+  </div>
   <div class="row products border-bottom flexs">
     <img id='loading-svg' class="img-responsive distance-bottom-image center-block" src="assets/img/hourglass.svg" />
-
-    <!-- <div class="col-md-3">
-        <div class="ibox">
-            <div class="ibox-content product-box">
-                <div class="product-imitation">
-                    <img src="https://placeimg.com/260/200/any">
-                </div>
-                <div class="product-desc">
-                    <span class="product-price">
-                                $10
-                    </span>
-                    <small class="text-muted">Category</small>
-                    <a href="#" class="product-name"> Product</a>
-                    <div class="small m-t-xs">
-                        Many desktop publishing packages and web page editors now.
-                    </div>
-                    <div class="m-t text-righ">
-                        <a href="#" class="btn btn-xs btn-outline btn-primary">Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
   </div>
   <?php
       use Emall\Pagination\Pagination;
@@ -93,7 +71,6 @@
       use Emall\Auth\Filter;
 
       $page     = new Pagination;
-      $sellerID = Session::get('sellerSession');
 
         if (isset($_GET['page'])) {
             if (!is_numeric($_GET['page'])){
@@ -141,24 +118,73 @@
             }
         }
 
-      $total_records = $page->TotalRows($sellerID,$subcategories);
+        if (isset($_GET['seller_id'])) {
+            if (is_string($_GET['seller_id'])){
+                $sellerID = Filter::StringFilter($_GET['seller_id']);
+            } else {
+                $sellerID = null;
+            }
+        }
+
+      if(isset($sellerID)){
+        $total_records = $page->TotalRows($sellerID,$subcategories);
+      } else {
+        $total_records = $page->TotalRowsWithoutSID($subcategories);
+      }
+
       $total_pages   = ceil($total_records/$item_per_page);
 
-      // ($item_per_page, $current_page, $total_records, $total_pages, $first = '', $second = '', $third = '', $fourth = '', $subcategories = '', $psort = '', $dsort ='')
+    //  1. $current_page
+    //  2. $total_pages
+    //  3. $first  for page
+    //  4. $second  for sub
+    //  5. $third   for seller
+    //  6. $fourth for psort
+    //  7. $fifth   for  dsort
+    //  8. $sixth for search
+    //  9 .$page ='',
+    //  10. $subcategories = '',
+    //  11 .$sellerID ='',
+    //  12. $psort = '',
+    //  13. $dsort = '',
+    //  14. $search = ''
 
-      if (isset($priceSort, $subcategories)) {
-          echo $page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page=','&subcategories=', '&psort=', '', $subcategories, $priceSort, '');
+      if (isset($sellerID, $subcategories, $priceSort)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', '&seller_id=', '&psort=', null, null, null, $subcategories, $sellerID, $priceSort, null, null];
+          echo $page->paginate_function($data);
+      } elseif (isset($sellerID, $subcategories, $defaultSort)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', '&seller_id=', null, '&dsort=', null, null, $subcategories, $sellerID, null, $defaultSort, null];
+          echo $page->paginate_function($data);
+      } elseif (isset($sellerID, $priceSort)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' , null, '&seller_id=', '&psort=', null, null, null, null, $sellerID, $priceSort, null, null];
+          echo $page->paginate_function($data);
+      } elseif (isset($sellerID, $subcategories)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', '&seller_id=', null, null, null, null, $subcategories, $sellerID, null, null, null];
+          echo $page->paginate_function($data);
+      } elseif (isset($sellerID, $defaultSort)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' , null, '&seller_id=', null, '&dsort=', null, null, $subcategories, $sellerID, null, $defaultSort, null];
+          echo $page->paginate_function($data);
+      } elseif (isset($sellerID)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' , null, '&seller_id=', null, null, null, null, null, $sellerID, null, null, null];
+          echo $page->paginate_function($data);
+      }  elseif (isset($priceSort, $subcategories)) {
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', null, '&psort=', null, null, null, $subcategories, null, $priceSort, null, null];
+          echo $page->paginate_function($data);
       } elseif (isset($priceSort)) {
-          echo $page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page=','', '&psort=','', '', $priceSort, '');
+          $data = [$page_number, $total_pages, 'product.php?page=' ,null, null, '&psort=', null, null, null, null, null, $priceSort, null, null];
+          echo $page->paginate_function($data);
       } elseif (isset($subcategories, $defaultSort)) {
-          echo $page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page=','&subcategories=','','&dsort=', $subcategories,'', $defaultSort);
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', null, null, '&dsort=' , null, null, $subcategories, null, null, $defaultSort, null];
+          echo $page->paginate_function($data);
       } elseif (isset($subcategories)) {
-          echo $page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page=','&subcategories=','','', $subcategories,'', '');
+          $data = [$page_number, $total_pages, 'product.php?page=' ,'&subcategories=', null, null, null , null, null, $subcategories, null, null, null, null];
+          echo $page->paginate_function($data);
       } elseif (isset($defaultSort)) {
-          echo $page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page=','', '','&dsort=', '', '', $defaultSort);
-      } else {
-           $ar = json_encode($page->paginate_function($item_per_page, $page_number, $total_records, $total_pages,'product.php?page='));
-          echo json_decode($ar);
+          $data = [$page_number, $total_pages, 'product.php?page=' , null, null, null, '&dsort=' , null, null, null, null, null, $defaultSort, null];
+          echo $page->paginate_function($data);
+      }  else {
+          $data = [$page_number, $total_pages, 'product.php?page=' ,null , null, null, null , null, null, null, null, null, null, null];
+          echo $page->paginate_function($data);
       }
   ?>
 </section>

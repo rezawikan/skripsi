@@ -7,7 +7,7 @@ use Emall\Auth\Redirect;
 use Emall\Database\Database;
 use Emall\Email\Email;
 
-$seller 	= new Auth;
+$buyer 	= new Auth;
 $user 		= Database::getInstance();
 $home_url = '../../../index.php'; // redirect link
 
@@ -25,12 +25,12 @@ if (isset($_POST['email'],
     $firstName  = $_POST['firstName'];
 		$lastName   = $_POST['lastName'];
 		$password   = $_POST['password'];
-    $code       = $seller->generateRandomString(50);
+    $code       = $buyer->generateRandomString(50);
 
-		if ($seller->register($email, $username, $firstName, $lastName, $password, $code)) {
+		if ($buyer->register($email, $username, $firstName, $lastName, $password, $code)) {
 
 				$lastID = $user->lastID();
-	      $seller->startBalance($lastID);
+	      $buyer->startBalance($lastID);
 	      $key = base64_encode($lastID);
 	      $id = $key;
 
@@ -173,7 +173,7 @@ if (isset($_POST['email'],
                                           <table border='0' cellpadding='0' cellspacing='0' style='border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;'>
                                             <tbody>
                                               <tr>
-                                                <td style='font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #3498db; border-radius: 5px; text-align: center;' valign='top' bgcolor='#3498db' align='center'> <a href='http://localhost/skripsi/seller/verify.php?id=$id&code=$code' target='_blank' style='display: inline-block; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db;'>Confirm Emall Account</a> </td>
+                                                <td style='font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #3498db; border-radius: 5px; text-align: center;' valign='top' bgcolor='#3498db' align='center'> <a href='http://localhost/skripsi/verify.php?id=$id&code=$code' target='_blank' style='display: inline-block; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db;'>Confirm Emall Account</a> </td>
                                               </tr>
                                             </tbody>
                                           </table>

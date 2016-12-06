@@ -5,7 +5,7 @@ require_once '../../vendor/autoload.php';
 use Emall\Auth\Authentication as Auth;
 use Emall\Auth\Redirect;
 
-$seller = new Auth;
+$buyer = new Auth;
 $home_url = '../../index.php'; // redirect link
 $result = array();
 
@@ -17,8 +17,8 @@ $result = array();
   $id 			= base64_decode($_POST['id']);
   $code 		= $_POST['code'];
 
-  if ($seller->updatePassword($password, $id)) {
-      $seller->updateTemporaryCode($code, $id);
+  if ($buyer->updatePassword($password, $id)) {
+      $buyer->updateTemporaryCode($code, $id);
       $result['status'] = 'success';
       echo json_encode($result);
   }

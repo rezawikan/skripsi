@@ -47,33 +47,56 @@ $(document).ready(function() {
         return "";
     }
 
+    // format number
+    function number_format(user_input){
+      var input = String(user_input);
+      var filtered_number = input.replace(/[^0-9]/gi, '');
+      var length = filtered_number.length;
+      var breakpoint = 1;
+      var formated_number = '';
+
+      for(i = 1; i <= length; i++){
+          if(breakpoint > 3){
+              breakpoint = 1;
+              formated_number = '.' + formated_number;
+          }
+          var next_letter = i + 1;
+          formated_number = filtered_number.substring(length - i, length - (i - 1)) + formated_number;
+
+          breakpoint++;
+      }
+
+      return formated_number;
+  	}
+
+
     // load data from table bank
     function loadData() {
-        var dataID = getCookie('id');
+        var dataID = getCookie('id-buyer');
         console.log(dataID);
 
         $.ajax({
-            url: 'function/bank/ViewDataBank.php',
+            url: 'function/Order/ManageOrder.php',
             type: 'POST',
             data: {
-                sellerID: dataID
+                buyerID: dataID
             },
             success: function(result) {
                 console.log(result);
                 var resultObj = JSON.parse(result);
                 var number = 0;
-                var dataHandler = $('#table-bank');
+                var dataHandler = $('#table-manage-order');
                 dataHandler.html("");
 
                 if (resultObj.empty) {
                     var emptyRow = $("<tr>");
-                    emptyRow.html("<td colspan='6' style=' height:100px; padding-top:50px; text-align:center;'>You don't have account bank</td>");
+                    emptyRow.html("<td colspan='6' style=' height:100px; padding-top:50px; text-align:center;'>You don't have data order</td>");
                     dataHandler.append(emptyRow);
                 } else {
                     $.each(resultObj, function(key, val) { // looping data
                         number++;
                         var newRow = $("<tr>");
-                        newRow.html("<td>" + number + "</td><td>" + val.bankName + "</td><td>" + val.branch + "</td><td>" + val.accountNumber + "</td><td>" + val.ownerName + "</td><td><a data-toggle='modal' class='edit_bank' id='" + val.seller_bankID + "' href='#modal-form-update'><i title='Edit' class='fa fa-pencil'></i></a></td>");
+                        newRow.html("<td>" + val.orderID + "</td><td>" + val.status + "</td><td>" + val.cost + "</td><td>" + val.weight + " Kg</td><td>" + val.estimation + " Day</td><td>" + val.update_at + "</td><td><a data-toggle='modal' class='edit_bank' id='" + val.orderID + "' href='#modal-form-update'><i title='Order Details' class='fa fa-eye'></i></a></td>");
                         dataHandler.append(newRow).trigger('footable_redraw');
                     })
                 }
@@ -82,7 +105,7 @@ $(document).ready(function() {
     }
 
     /// create a new instance for loading
-    var l = Ladda.create(document.querySelector('button[name=submit-btn-add]'));
+    // var l = Ladda.create(document.querySelector('button[name=submit-btn-add]'));
     // Form Validation add
     $('#form-data-add').formValidation({
             framework: 'bootstrap',
@@ -171,28 +194,49 @@ $(document).ready(function() {
         var dataID = $(this).attr('id'); // get data from attribute id
 
         $.ajax({
-            url: 'function/bank/EditDataBank.php',
+            url: 'function/Order/ViewOrderDetails.php',
             type: 'POST',
             data: {
-                seller_bankID: dataID
+                orderID: dataID
             },
             success: function(result) {
                 var resultObj = JSON.parse(result);
                 console.log(resultObj);
+                var tbody  = $('.table-view-details');
+                var tfoot  = $('.table-view-shipment');
+                tbody.html("");
+                tfoot.html("");
+                $.each(resultObj['details'], function(index, el) {
+                  console.log(el.productName);
+                  var newRow = $("<tr>");
+                  newRow.html("<td width='90'><div class='cart-product-imitation'></div></td><td class='desc'><h3><a href='#' class='text-navy'>"+ el.productName +"</a></h3><p class='small'>Page when looking at its layout. The point of using Lorem Ipsum is</p></td><td width='65'><input type='text' class='form-control' placeholder='"+ el.quantity +"' disabled></td><td><h4>"+ number_format((el.quantity*el.productPrice))+"</h4></td>");
+                  tbody.append(newRow);
+                });
 
-                // replace data that loaded to form
-                $('#form-data-update input[name=seller_bankID]').val(resultObj.seller_bankID);
-                $('#form-data-update input[name=sellerID]').val(resultObj.sellerID);
-                $('#form-data-update select[name=bankID]').val(resultObj.bankID);
-                $('#form-data-update input[name=accountNumber]').val(resultObj.accountNumber);
-                $('#form-data-update input[name=ownerName]').val(resultObj.ownerName);
-                $('#form-data-update input[name=branch]').val(resultObj.branch);
+                $.each(resultObj['shipment'], function(index, el) {
+                  var secondRow   = $("<tr>");
+                  var thirdRow    = $("<tr>");
+                  var fourthRow   = $("<tr>");
+                  var fifthhRow   = $("<tr>");
+                  var sixthRow    = $("<tr>");
+                  var seventhRow  = $("<tr>");
+                  secondRow.html("<td width='90'>Courier Name</td><td width='90'>:</td><td colspan='2'>"+ el.name +"</td>");
+                  thirdRow.html("<td width='90'>Cost Delivery</td><td width='90'>:</td><td colspan='2'>"+ el.cost +"</td>");
+                  fourthRow.html("<td width='90'>Weight</td><td width='90'>:</td><td colspan='2'>"+ el.weight +"</td>");
+                  fifthhRow.html("<td width='90'>Estimation</td><td width='90'>:</td><td colspan='2'>"+ el.estimation +"</td>");
+                  sixthRow.html("<td width='90'>Status</td><td width='90'>:</td><td colspan='2'>"+ el.status +"</td>");
+                  seventhRow.html("<td width='90'>last Update</td><td width='90'>:</td><td colspan='2'>"+ el.update_at +"</td>");
+                  tfoot.append(secondRow,thirdRow,fourthRow,fifthhRow,sixthRow,seventhRow);
+                });
+
+
+
             }
         })
     });
 
     // create a new instance for loading
-    var u = Ladda.create(document.querySelector('button[name=submit-btn-update]'));
+    // var u = Ladda.create(document.querySelector('button[name=submit-btn-update]'));
     // form validation update
     $('#form-data-update').formValidation({
             framework: 'bootstrap',

@@ -17,10 +17,8 @@
                           <ul class="dropdown-menu">
                           <?php
                           use Emall\Auth\Session;
-                          $seller->setTable('categories');
-                          $categories = $seller->join('sub_categories','categories.categoriesID','=','sub_categories.categoriesID')
-                          ->join('product','sub_categories.subcategoriesID','=','product.subcategoriesID')
-                          ->where('product.sellerID','=',Session::get('sellerSession'))
+                          $buyer->setTable('categories');
+                          $categories = $buyer->join('sub_categories','categories.categoriesID','=','sub_categories.categoriesID')
                           ->select('categories.categoryName, categories.categoriesID','DISTINCT')
                           ->all();
 
@@ -29,8 +27,8 @@
                           }
 
                           foreach ($categories as $index => $category) {
-                            $seller->setTable('sub_categories');
-                            $sub_categories = $seller->join('product','sub_categories.subcategoriesID','=','product.subcategoriesID')
+                            $buyer->setTable('sub_categories');
+                            $sub_categories = $buyer
                             ->where('categoriesID','=',$category->categoriesID)
                             ->select('sub_categories.subName, sub_categories.subcategoriesID','DISTINCT')
                             ->all();
@@ -58,6 +56,20 @@
                         <img alt="image" width="48" height="48" class="img-circle" src="uploads/profile/<?php echo $user->image; ?>"/>
                     </ul>
 
+                    <!-- name -->
+                    <ul class="nav navbar-nav navbar-right">
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user->fullName; ?> <span class="caret"></span></a>
+                        <ul class="dropdown-menu ">
+                          <li><a class="" href="profile.php">Profile</a></li>
+                          <li><a class="" href="manage_orders.php">Manage Orders</a></li>
+                          <li><a class="" href="topup.php">Top Up</a></li>
+                          <li><a class="" href="logout.php">Logout</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <!-- alert -->
                     <ul class="nav navbar-nav navbar-right">
                       <li class="dropdown">
                           <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
@@ -101,24 +113,24 @@
                               </li>
                           </ul>
                       </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user->fullName; ?> <span class="caret"></span></a>
-                          <ul class="dropdown-menu ">
-                            <li><a class="" href="profile.php">Profile</a></li>
-                            <li><a class="" href="manage_products.php">Manage Products</a></li>
-                            <li><a class="" href="manage_orders.php">Manage Orders</a></li>
-                            <li><a class="" href="bank.php">Manage Bank</a></li>
-                            <li><a class="" href="withdrawal.php">Withdrawal</a></li>
-                            <li><a class="" href="logout.php">Logout</a></li>
-                          </ul>
+                    </ul>
+
+                    <!-- cart -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="cart.php" class="count-info">
+                              <i class="fa fa-shopping-cart fa-lg " aria-hidden="true"></i><span class="label label-primary pull-right cookie"></span>
+                            </a>
                         </li>
                     </ul>
+
+                    <!-- balance -->
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <?php
                                 use Emall\Transaction\Converter;
-                                $seller->setTable('seller_balance');
-                                $balance_user = $seller->select()->where('sellerID','=',$id)->first();
+                                $buyer->setTable('buyer_balance');
+                                $balance_user = $buyer->select()->where('buyerID','=',$id)->first();
                                 $balanceConvert = Converter::convertToIDR($balance_user->balance);
                             ?>
                             <a class="balance"><i>Balance : <span><?php echo $balanceConvert; ?></span></i></a>

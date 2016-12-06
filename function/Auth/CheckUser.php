@@ -5,12 +5,12 @@ require_once '../../vendor/autoload.php';
 use Emall\Auth\Authentication as Auth;
 use Emall\Auth\Redirect;
 
-$seller 	= new Auth;
+$buyer 	= new Auth;
 $home_url = '../../index.php'; // redirect link
 
 if (isset($_POST['username'])) { // is empty or not
 		$username = $_POST['username'];
-		if ($seller->checkUser($username)) { // checking username
+		if ($buyer->checkUser($username)) { // checking username
 				$isAvailable = true;
 		} else {
 				$isAvailable = false;

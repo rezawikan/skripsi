@@ -54,26 +54,24 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <div>
-                    <p id='message'></p>
-                </div>
+                <input type="text" class="form-control input-sm m-b-xs distance-top" id="filter" placeholder="Search Details Order">
                   <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
                     <thead>
                       <tr>
-                          <th>Order ID</th>
-                          <th>Order Status</th>
-                          <th>Payment Status</th>
-                          <th>Delivery Status</th>
-                          <th>Customer ID</th>
-                          <th>Order Date</th>
-                          <th>Action</th>
+                        <th>Order ID</th>
+                        <th>Order Status</th>
+                        <th>Cost</th>
+                        <th>Weight</th>
+                        <th>Estimation</th>
+                        <th>Last Update</th>
+                        <th>Details</th>
                       </tr>
                       </thead>
-                      <tbody id="table-bank">
+                      <tbody id="table-manage-order">
                       </tbody>
                       <tfoot>
                         <tr>
-                          <td colspan="7">
+                          <td colspan="8">
                             <ul class="pagination pull-right"></ul>
                           </td>
                         </tr>
@@ -89,21 +87,21 @@
           <div class="modal-content">
               <div class="modal-body">
                   <div class="row">
-                      <div class="col-sm-12"><h3 class="m-t-none m-b">Edit Order Details</h3>
-                          <p>Make sure your data order</p>
-
-                          <form role="form" id="form-data-update" method="POST">
-                            <div id="seller_bankID" class="form-group">
-                              <label for="">Seller Bank ID</label>
-                              <input type="text" class="form-control" name="seller_bankID">
+                      <div class="col-sm-12"><h3 class="m-t-none m-b">Order Details</h3>
+                        <div class="table-responsive">
+                                <table class="table shoping-cart-table">
+                                  <thead>
+                                    <th>Pictures</th>
+                                    <th>Short Description</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                  </thead>
+                                  <tbody class='table-view-details'>
+                                  </tbody>
+                                  <tfoot class="table-view-shipment">
+                                  </tfoot>
+                                </table>
                             </div>
-
-                            <!-- Form Data Bank -->
-                            <?php include 'templates/part/form-data-bank.php'; ?>
-
-                            <button class="btn btn-sm btn-primary ladda-button" data-style="expand-right" type="submit" name="submit-btn-update">Update</button>
-                            <button class="btn btn-sm btn-primary" type="reset">Reset</button>
-                          </form>
                         </div>
                     </div>
                 </div>

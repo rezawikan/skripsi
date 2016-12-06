@@ -269,43 +269,6 @@
 
 <!-- Custom Js -->
 <script src="assets/js/custom/custom.js"></script>
-<script>
-        $(document).ready(function() {
-
-          var lineData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(26,179,148,0.5)",
-                        borderColor: "rgba(26,179,148,0.7)",
-                        pointBackgroundColor: "rgba(26,179,148,1)",
-                        pointBorderColor: "#fff",
-                        data: [48, 48, 60, 39, 56, 37, 30]
-                    },
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(220,220,220,0.5)",
-                        borderColor: "rgba(220,220,220,1)",
-                        pointBackgroundColor: "rgba(220,220,220,1)",
-                        pointBorderColor: "#fff",
-                        data: [65, 59, 40, 51, 36, 25, 40]
-                    }
-                ]
-            };
-
-            var lineOptions = {
-                responsive: true
-            };
-
-
-            var ctx = document.getElementById("lineChart").getContext("2d");
-            new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
-
-        });
-    </script>
-
-
 
 </body>
 </html>

@@ -48,6 +48,9 @@
     </div>
 </section>
 <section id="features" class="container wow fadeInRight ">
+  <div class="row">
+    <div id="message"></div>
+  </div>
   <div class="row products border-bottom">
     <img id='loading-svg' class="img-responsive distance-bottom-image distance-top-image center-block" src="assets/img/hourglass.svg" />
   </div>

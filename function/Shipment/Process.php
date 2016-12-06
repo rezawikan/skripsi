@@ -21,6 +21,7 @@ if (isset($_GET['action'])) {
       $data_city = $_GET['city'];
       $districts = $shipment->showAllSubDistricts($data_city);
       echo $districts;
+      break;
     default:
       # code...
       break;

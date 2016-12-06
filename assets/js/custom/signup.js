@@ -109,9 +109,12 @@ $(document).ready(function() {
         l.start();
         // Use Ajax to submit form data
         $.ajax( {
-            url: 'function/auth/registerUser.php', type: 'POST', data: $form.serialize(), success: function(result) {
+            url: 'function/auth/registerUser.php',
+            type: 'POST',
+            data: $form.serialize(),
+            success: function(result) {
                 // ... Process the result ..
-                var resultObj=JSON.parse(result);
+                var resultObj = JSON.parse(result);
                 // console.log(resultObj); // log processing
                 if(resultObj.process=='success') {
                     $('#message').html("<div class='alert alert-success alert-dismissable'><button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button><strong>Success!</strong>  We've sent an email to "+resultObj.email+". Please click on the confirmation link in the email to create your account.</div>");

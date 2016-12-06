@@ -278,7 +278,7 @@ $(document).ready(function() {
               findCategories(resultObj.subcategoriesID);
               $('#form-data-update input[name=productID]').val(resultObj.productID);
               $('#form-data-update input[name=productName]').val(resultObj.productName);
-              $('#form-data-update textarea[name=shortDescription]').val(resultObj.shortDescription);
+              $('#form-data-update input[name=shortDescription]').val(resultObj.shortDescription);
               $('#form-data-update textarea[name=description]').val(resultObj.productDescription);
               $('#form-data-update input[name=price]').val(number_format(resultObj.productPrice));
               $('#form-data-update input[name=weight]').val(resultObj.productWeight);

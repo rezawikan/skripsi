@@ -28,16 +28,16 @@ class Authentication
 		try {
 					$pass = password_hash($password, PASSWORD_DEFAULT);
 					$user = $this->conn;
-					$user->setTable('seller');
-					// $user->create([
-					// 	'email'			=> $email,
-					// 	'username'	=> $username,
-					// 	'firstName'	=> $firstName,
-					// 	'lastName' 	=> $lastName,
-					// 	'password'	=> $pass,
-					// 	'code'			=> $code,
-					// 	'create_at' => date_format(new DateTime(), 'Y-m-d H:i:s')
-					// ]);
+					$user->setTable('buyer');
+					$user->create([
+						'email'			=> $email,
+						'username'	=> $username,
+						'firstName'	=> $firstName,
+						'lastName' 	=> $lastName,
+						'password'	=> $pass,
+						'code'			=> $code,
+						'create_at' => date_format(new DateTime(), 'Y-m-d H:i:s')
+					]);
 
 					return true;
 

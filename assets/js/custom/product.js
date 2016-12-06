@@ -3,6 +3,7 @@ $(document).ready(function(){
     loadTitle();
     loadData();
 
+
     var psort         = getParameterByName('psort');
     var dsort         = getParameterByName('dsort');
 
@@ -21,60 +22,78 @@ $(document).ready(function(){
         var subcategories = getParameterByName('subcategories');
         var psort         = getParameterByName('psort');
         var dsort         = getParameterByName('dsort');
+        var seller_id     = getParameterByName('seller_id');
         var value         = this.options[this.selectedIndex].value;
 
-
-        if (value == "dsort-asc" && typeof subcategories == "string" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&dsort=ASC";
+        if (value == "dsort-asc" && typeof subcategories == "string" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&seller_id="+seller_id+"&dsort=ASC";
+        } else if (value == "dsort-desc" && typeof subcategories == "string" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&seller_id="+seller_id+"&dsort=DESC";
+        } else if (value == "dsort-asc" && typeof subcategories == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&seller_id="+seller_id+"&dsort=ASC";
+        } else if (value == "dsort-desc" && typeof subcategories == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&seller_id="+seller_id+"&dsort=DESC";
+        } else if (value == "dsort-asc" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&seller_id="+seller_id+"&dsort=ASC";
+        } else if (value == "dsort-desc" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&seller_id="+seller_id+"&dsort=DESC";
+        } else if (value == "dsort-asc" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php?seller_id="+seller_id+"&dsort=ASC";
+        } else if (value == "dsort-desc" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php?seller_id="+seller_id+"&dsort=DESC";
+        } else if (value == "psort-asc" && typeof subcategories == "string" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&seller_id="+seller_id+"&psort=ASC";
+        } else if (value == "psort-desc" && typeof subcategories == "string" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&seller_id="+seller_id+"&psort=DESC";
+        } else if (value == "psort-asc" && typeof subcategories == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&seller_id="+seller_id+"&psort=ASC";
+        } else if (value == "psort-desc" && typeof subcategories == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&seller_id="+seller_id+"&psort=DESC";
+        } else if (value == "psort-asc" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&seller_id="+seller_id+"&psort=ASC";
+        } else if (value == "psort-desc" && typeof page_number == "string" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&seller_id="+seller_id+"&psort=DESC";
+        } else if (value == "psort-asc" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php?seller_id="+seller_id+"&psort=ASC";
+        } else if (value == "psort-desc" && typeof seller_id == "string"){
+                    window.location = "http://localhost/skripsi/product.php?seller_id="+seller_id+"&psort=DESC";
+          // limit atas
+        } else if (value == "dsort-asc" && typeof subcategories == "string" && typeof page_number == "string") {
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&dsort=ASC";
         } else if (value == "dsort-desc" && typeof subcategories == "string" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&dsort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&dsort=DESC";
         } else if (value == "dsort-asc" && typeof subcategories == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?subcategories="+subcategories+"&dsort=ASC";
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&dsort=ASC";
         } else if (value == "dsort-desc" && typeof subcategories == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?subcategories="+subcategories+"&dsort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&dsort=DESC";
         } else if (value == "dsort-asc" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&dsort=ASC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&dsort=ASC";
         } else if (value == "dsort-desc" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&dsort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&dsort=DESC";
         } else if (value == "dsort-asc") {
-                    window.location = "http://localhost/emall/product.php?dsort=ASC";
+                    window.location = "http://localhost/skripsi/product.php?dsort=ASC";
         } else if (value == "dsort-desc") {
-                    window.location = "http://localhost/emall/product.php?dsort=DESC";
+                    window.location = "http://localhost/skripsi/product.php?dsort=DESC";
                     // limit
         } else if (value == "psort-asc" && typeof subcategories == "string" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&psort=ASC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&psort=ASC";
         } else if (value == "psort-desc" && typeof subcategories == "string" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&psort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&subcategories="+subcategories+"&psort=DESC";
         } else if (value == "psort-asc" && typeof subcategories == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?subcategories="+subcategories+"&psort=ASC";
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&psort=ASC";
         } else if (value == "psort-desc" && typeof subcategories == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?subcategories="+subcategories+"&psort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?subcategories="+subcategories+"&psort=DESC";
         } else if (value == "psort-asc" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&psort=ASC";
-        } else if (value == "psort-desc" && typeof page_number == "string") {
-                    window.location = "http://localhost/emall/product.php"+"?page="+page_number+"&psort=DESC";
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&psort=ASC";
+        } else if (value == "psort-asc" && typeof page_number == "string")  {
+                    window.location = "http://localhost/skripsi/product.php"+"?page="+page_number+"&psort=DESC";
         } else if (value == "psort-asc") {
-                    window.location = "http://localhost/emall/product.php?psort=ASC";
-        } else if (value == "psort-desc") {
-                    window.location = "http://localhost/emall/product.php?psort=DESC";
+                    window.location = "http://localhost/skripsi/product.php?psort=ASC";
+        } else if (value == "psort-asc") {
+                    window.location = "http://localhost/skripsi/product.php?psort=DESC";
         }
     });
 
-    // get data cookie
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return null;
-    }
 
     // function get value from adrress
     function getParameterByName(name, url) {
@@ -127,13 +146,12 @@ $(document).ready(function(){
 
     // load data from table bank
     function loadData() {
-        var dataID = getCookie('id');
-        // get id and code from address
         var page_number   = getParameterByName('page');
         var limit         = getParameterByName('limit');
         var subcategories = getParameterByName('subcategories');
         var psort         = getParameterByName('psort');
         var dsort         = getParameterByName('dsort');
+        var seller_id     = getParameterByName('seller_id');
 
         $.ajax({
             url: 'function/Pagination/Paginator.php',
@@ -143,29 +161,33 @@ $(document).ready(function(){
                 limit : limit,
                 subcategories : subcategories,
                 psort : psort,
-                dsort : dsort
+                dsort : dsort,
+                seller_id :seller_id
             },
             success: function(result) {
-                console.log(result);
+                // console.log(result);
                 var resultObj = JSON.parse(result);
                 var number = 0;
                 var dataHandler = $('.products');
                 dataHandler.html("");
                 $('#loading-svg').hide();
 
-                if(resultObj.empty){
-                    var emptyRow = $("<tr>");
-                    emptyRow.html("<td colspan='8' style=' height:100px; padding-top:50px; text-align:center;'>Your product is empty</td>");
+                if(resultObj == ''){
+                    var emptyRow = $("<div>");
+                    emptyRow.html("<div class='row products border-bottom flexs'>This Product is Empty</div>");
                     dataHandler.append(emptyRow);
                 }else{
                     $.each(resultObj, function(key, val) { // looping data
                         number++;
                         var newRow = $("<div class='col-lg-3 col-md-3 col-xs-12'>");
-                        newRow.html("<div class='ibox'><div class='ibox-content product-box'><div class='product-imitation'><img class='img-responsive' src='uploads/product/1_1478870412.jpg'></div><div class='product-desc'><span class='product-price'>IDR "+number_format(val.productPrice)+"</span><small class='text-muted'>Category</small><a href='#' class='product-name'> "+val.productName+"</a><div class='small m-t-xs'>"+val.shortDescription+"</div><div class='m-t text-righ'><a href='product_details.php?productID="+val.productID+"' class='btn btn-primary details'>Details</a></div></div></div></div>");
+                        newRow.html("<div class='ibox'><div class='ibox-content product-box'><div class='product-imitation'><img class='img-responsive' src='seller/uploads/product/"+val.image_name+"'></div><div class='product-desc'><span class='product-price'>IDR "+number_format(val.productPrice)+"</span><small class='text-muted'>Category</small><a href='#' class='product-name'> "+val.productName+"</a><div class='small m-t-xs'>"+val.shortDescription+"</div><div class='m-t text-right'><a data-id='"+val.productID+"' class='btn btn-primary details pull-left add-to'>Add to cart</a><a href='product_details.php?productID="+val.productID+"' class='btn btn-primary details'>Details</a></div></div></div></div>");
                         dataHandler.append(newRow);
                     })
                 }
             }
         })
     }
+
+
+
 });

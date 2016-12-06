@@ -28,16 +28,16 @@ class Authentication
 		try {
 					$pass = password_hash($password, PASSWORD_DEFAULT);
 					$user = $this->conn;
-					$user->setTable('seller');
-					// $user->create([
-					// 	'email'			=> $email,
-					// 	'username'	=> $username,
-					// 	'firstName'	=> $firstName,
-					// 	'lastName' 	=> $lastName,
-					// 	'password'	=> $pass,
-					// 	'code'			=> $code,
-					// 	'create_at' => date_format(new DateTime(), 'Y-m-d H:i:s')
-					// ]);
+					$user->setTable('buyer');
+					$user->create([
+						'email'			=> $email,
+						'username'	=> $username,
+						'firstName'	=> $firstName,
+						'lastName' 	=> $lastName,
+						'password'	=> $pass,
+						'code'			=> $code,
+						'create_at' => date_format(new DateTime(), 'Y-m-d H:i:s')
+					]);
 
 					return true;
 
@@ -50,9 +50,9 @@ class Authentication
 	public function startBalance($id)
 	{
 		$user = $this->conn;
-		$user->setTable('seller_balance');
+		$user->setTable('buyer_balance');
 		$user->create([
-			'sellerID' => $id
+			'buyerID' => $id
 		]);
 
 		return true;
@@ -80,7 +80,7 @@ class Authentication
 
 	// check session and cookie user
 	public function is_logged_in(){
-	  if (Session::exists('sellerSession') && isset($_COOKIE['id']))
+	  if (Session::exists('buyerSession') && isset($_COOKIE['id-buyer']))
 		{
 	  		return true;
 	  } else {
@@ -93,7 +93,7 @@ class Authentication
 	{
 		try {
 			$user = $this->conn;
-			$user->setTable('seller');
+			$user->setTable('buyer');
 			$result = $user->select()->where('username','=',$username)->first();
 
 			if($result == null){
@@ -111,7 +111,7 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
+				$user->setTable('buyer');
 				$result = $user->select()->where('email','=',$email)->first();
 
 				if ($result == null) {
@@ -129,14 +129,14 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
+				$user->setTable('buyer');
 				$result = $user->select()->where('username','=',$username)->orWhere('email','=',$username)->first();
 
 			if ($result) {
 				if ($result->status == "A") {
 						if (password_verify($pass,$result->password)) {
-								Session::set('sellerSession',$result->sellerID);
-								setcookie('id', $result->sellerID, time() + (86400 * 30), "/");
+								Session::set('buyerSession',$result->buyerID);
+								setcookie('id-buyer', $result->buyerID, time() + (86400 * 30), "/");
 								$status['success'] = 'login successfully';
 						} else {
 							$status['wrong'] = 'your password is wrong';
@@ -160,8 +160,8 @@ class Authentication
 	public function logout()
 	{
 		Session::destroy();
-		Session::empty('sellerSession');
-		setcookie("id", "", time() - (86400 * 30), "/");
+		Session::empty('buyerSession');
+		setcookie("id-buyer", "", time() - (86400 * 30), "/");
 	}
 
 	// check user for verified account
@@ -169,15 +169,15 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->select('sellerID, status')
-				->where('sellerID','=',$id)
+				$user->setTable('buyer');
+				$result = $user->select('buyerID, status')
+				->where('buyerID','=',$id)
 				->where('code','=',$code)
 				->first();
 
 			if ($result != false) {
 					if ($result->status == $this->statusInactive) {
-							$result = $user->where('sellerID','=',$id)
+							$result = $user->where('buyerID','=',$id)
 							->update([
 								'status' => $this->statusActive
 							]);
@@ -198,18 +198,18 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->select('sellerID, status, username, code')->where('email','=',$email)->first();
+				$user->setTable('buyer');
+				$result = $user->select('buyerID, status, username, code')->where('email','=',$email)->first();
 
 			if ($result != false) {
 					$report 		= $result->status;
 					$username 	= $result->username;
-					$sellerID 	= $result->sellerID;
+					$buyerID 	= $result->buyerID;
 					$code 			= $result->code;
 
 
 					if ($report != $this->statusSuspend) {
-						$id = base64_encode($sellerID);
+						$id = base64_encode($buyerID);
 
 					$message 	= "
 					<!doctype html>
@@ -350,7 +350,7 @@ class Authentication
 			                                            <table border='0' cellpadding='0' cellspacing='0' style='border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;'>
 			                                              <tbody>
 			                                                <tr>
-			                                                  <td style='font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #1ab394; border-radius: 5px; text-align: center;' valign='top' bgcolor='#1ab394' align='center'> <a href='http://localhost/skripsi/seller/reset_password.php?id=$id&code=$code' target='_blank' style='display: inline-block; color: #ffffff; background-color: #1ab394; border: solid 1px #1ab394; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #1ab394;'>Reset Your Password</a> </td>
+			                                                  <td style='font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #1ab394; border-radius: 5px; text-align: center;' valign='top' bgcolor='#1ab394' align='center'> <a href='http://localhost/skripsi/reset_password.php?id=$id&code=$code' target='_blank' style='display: inline-block; color: #ffffff; background-color: #1ab394; border: solid 1px #1ab394; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #1ab394;'>Reset Your Password</a> </td>
 			                                                </tr>
 			                                              </tbody>
 			                                            </table>
@@ -421,8 +421,8 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->select()->where('sellerID','=',$id)->where('tempCode','=',$code)->first();
+				$user->setTable('buyer');
+				$result = $user->select()->where('buyerID','=',$id)->where('tempCode','=',$code)->first();
 
 				if ($result != false) {
 					 return true;
@@ -439,8 +439,8 @@ class Authentication
 	{
 		try {
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->select()->where('sellerID','=',$id)->where('code','=',$code)->first();
+				$user->setTable('buyer');
+				$result = $user->select()->where('buyerID','=',$id)->where('code','=',$code)->first();
 
 				if ($result != false ) {
 						return true;
@@ -458,8 +458,8 @@ class Authentication
 		try {
 				$password = password_hash($fpassword, PASSWORD_DEFAULT);
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->where('sellerID','=',$id)->update([
+				$user->setTable('buyer');
+				$result = $user->where('buyerID','=',$id)->update([
 					'password' => $password
 				]);
 
@@ -475,8 +475,8 @@ class Authentication
 		try {
 				$random = $this->generateRandomString(50);
 				$user = $this->conn;
-				$user->setTable('seller');
-				$result = $user->where('SellerID','=',$id)->update([
+				$user->setTable('buyer');
+				$result = $user->where('buyerID','=',$id)->update([
 					'tempCode'	=> $code,
 					'code'			=> $random
 				]);

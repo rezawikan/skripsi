@@ -16,7 +16,18 @@ class Product
   public function __construct()
   {
       $this->conn   = Database::getInstance();
-      $this->uploadProduct = new ImagesProduct;
+  }
+
+
+  public function check($productID){
+    try {
+          $user = $this->conn;
+          $user->setTable('product');
+          $result = $user->select()->where('productID','=',$productID)->first();
+          return $result;
+    } catch (Exception $e) {
+        echo "Error" . $e->getMessage();
+    }
   }
 
   public function LoadCategories()
@@ -72,57 +83,6 @@ class Product
         if ($result == null){
           $result['empty'] = 'Kosong';
         }
-        echo json_encode($result);
-    } catch (Exception $e) {
-        echo "Error" . $e->getMessage();
-    }
-  }
-
-  public function AddDataProduct($productName, $shortDescription, $description, $price, $quantity, $sub_categories, $weight, $images)
-  {
-    try {
-        $user = $this->conn;
-        $user->setTable('product');
-        $user->create([
-          'productName'         => $productName,
-          'shortDescription'    => $shortDescription,
-          'productDescription'  => $description,
-          'productPrice'        => $price,
-          'productQty'          => $quantity,
-          'subcategoriesID'     => $sub_categories,
-          'productWeight'       => $weight,
-          'sellerID'            => Session::get('sellerSession'),
-          'create_at'           => date_format(new DateTime(), 'Y-m-d H:i:s')
-        ]);
-
-        $lastid = $user->lastID();
-        $upload = $this->uploadProduct;
-
-        if ($images != null) {
-            foreach ($images as $index => $image) {
-              // $upload->setUserID($id);
-              $upload->setFileData($_FILES[$index]);
-              $upload->setDirectory('../../uploads/product/');
-              $upload->uploadImageProduct($lastid, $index);
-              if($index == 0){
-                $upload->setMainImage();
-              }
-            }
-
-        }
-        $status['valid'] = 'Data product successfully saved';
-        echo json_encode($status);
-    } catch (Exception $e) {
-        echo "Error" . $e->getMessage();
-    }
-  }
-
-  public function EditDataProduct($productID)
-  {
-    try {
-        $user = $this->conn;
-        $user->setTable('product');
-        $result = $user->select()->where('productID','=',$productID)->first();
         echo json_encode($result);
     } catch (Exception $e) {
         echo "Error" . $e->getMessage();
@@ -188,24 +148,4 @@ class Product
     }
   }
 
-  // delete data product
-  public function DeleteDataProduct($lastID)
-  {
-    try {
-        $delete = $this->uploadProduct;
-
-        for ($index=0; $index < 3; $index++) {
-          $delete->deletePrevImageProduct($lastID,$index);
-        }
-
-        $user = $this->conn;
-        $user->setTable('product');
-        $result = $user->where('productID','=',$lastID)->delete();
-
-        $result['valid'] = 'Data product has been delete';
-        echo json_encode($result);
-    } catch (PDOException $e){
-        echo "Error :" .$e->message();
-    }
-  }
 }

@@ -2,8 +2,17 @@
 
 namespace Emall\Shipment;
 
+use Emall\Auth\Session;
+use Emall\Auth\Redirect;
+use Emall\Database\Database;
+
 class Shipment
 {
+
+  public function __construct()
+	{
+		$this->conn = Database::getInstance();
+	}
 
   // show all data province
   public function showAllProvince()
@@ -123,7 +132,7 @@ class Shipment
     if ($err) {
       echo "cURL Error #:" . $err;
     } else {
-      echo $response;
+      return $response;
     }
 
   }
@@ -159,6 +168,31 @@ class Shipment
     }
   }
 
+  public function showBuyer($id)
+  {
+    try {
+      $buyer = $this->conn;
+      $buyer->setTable('buyer');
+      $user = $buyer->select()->where('buyerID','=',$id)->first();
+      return $user;
+    } catch (Exception $e) {
+        echo "Error ". $e->getMessage();
+    }
+
+
+  }
+
+  public function showSeller($id)
+  {
+    try {
+        $buyer = $this->conn;
+        $buyer->setTable('seller');
+        $user = $buyer->select()->where('sellerID','=',$id)->first();
+        return $user;
+    } catch (Exception $e) {
+        echo "Error ". $e->getMessage();
+    }
+  }
 
 
 }

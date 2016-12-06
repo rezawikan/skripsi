@@ -119,7 +119,7 @@
                 </div>
                 <div class="form-group">
                   <label>New Password</label>
-                  <input type="hidden" name="id" value="<?php echo $_SESSION["sellerSession"];?>" required>
+                  <input type="hidden" name="id" value="<?php echo $_SESSION["buyerSession"];?>" required>
                   <input type="password" class="form-control" placeholder="New Password" name="password" required>
                 </div>
                 <div class="form-group">

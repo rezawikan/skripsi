@@ -38,7 +38,7 @@
 <section class="container top-container">
   <div class="row">
     <div class="title-header" class="col-sm-12">
-      <h1>Sales Report</h1>
+      <h1>All Report</h1>
     </div>
   </div>
 </section>
@@ -97,47 +97,27 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3">
-      <div class="widget navy-bg p-lg text-center">
+    <div class="col-lg-6">
+      <a href="product.php">
+        <div class="widget navy-bg p-lg text-center">
           <div class="m-b-md">
               <i class="fa fa-shield fa-4x"></i>
-              <h1 class="m-xs">456</h1>
+            </br>
+            </br>
               <h3 class="font-bold no-margins">
-                  Number of Products
+                  View All Products
               </h3>
-              <small>number of product that you have</small>
+              <small>Get our best product</small>
           </div>
-      </div>
+        </div>
+      </a>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-6">
       <div class="widget navy-bg p-lg text-center">
           <div class="m-b-md">
               <i class="fa fa-shield fa-4x"></i>
-              <h1 class="m-xs">456</h1>
-              <h3 class="font-bold no-margins">
-                  Stock Alert
-              </h3>
-              <small>you have stock of less than 5</small>
-          </div>
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="widget navy-bg p-lg text-center">
-          <div class="m-b-md">
-              <i class="fa fa-shield fa-4x"></i>
-              <h1 class="m-xs">456</h1>
-              <h3 class="font-bold no-margins">
-                  View All Product
-              </h3>
-              <small>power</small>
-          </div>
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="widget navy-bg p-lg text-center">
-          <div class="m-b-md">
-              <i class="fa fa-shield fa-4x"></i>
-              <h1 class="m-xs">Today</h1>
+            </br>
+            </br>
               <h3 class="font-bold no-margins">
                   <?php echo date("F j, Y");?>
               </h3>
@@ -269,43 +249,6 @@
 
 <!-- Custom Js -->
 <script src="assets/js/custom/custom.js"></script>
-<script>
-        $(document).ready(function() {
-
-          var lineData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(26,179,148,0.5)",
-                        borderColor: "rgba(26,179,148,0.7)",
-                        pointBackgroundColor: "rgba(26,179,148,1)",
-                        pointBorderColor: "#fff",
-                        data: [48, 48, 60, 39, 56, 37, 30]
-                    },
-                    {
-                        label: "Example dataset",
-                        backgroundColor: "rgba(220,220,220,0.5)",
-                        borderColor: "rgba(220,220,220,1)",
-                        pointBackgroundColor: "rgba(220,220,220,1)",
-                        pointBorderColor: "#fff",
-                        data: [65, 59, 40, 51, 36, 25, 40]
-                    }
-                ]
-            };
-
-            var lineOptions = {
-                responsive: true
-            };
-
-
-            var ctx = document.getElementById("lineChart").getContext("2d");
-            new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
-
-        });
-    </script>
-
-
 
 </body>
 </html>
